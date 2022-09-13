@@ -4,8 +4,10 @@ import { expect } from 'chai';
 import { DataSource } from 'typeorm';
 import { startService, stopService } from '../src/storage/service';
 import Transport from '../src/common/Transport';
-import findHandler from '../src/storage/handlers/TestHandler';
 import AppDataSource from '../src/storage/data-source';
+import { StorageMethods } from '../src/common/constants';
+import GetMessagesHandler from '../src/storage/handlers/GetMessagesHandler';
+import GetMessageByIdHandler from '../src/storage/handlers/GetMessageByIdHandler';
 
 describe('Storage service', () => {
   let transport: Transport;
@@ -25,8 +27,10 @@ describe('Storage service', () => {
 
 describe('Database', () => {
   let dataSource: DataSource;
+  let transport: Transport;
 
   before(async () => {
+    transport = new Transport();
     dataSource = await AppDataSource.initialize();
   });
 
@@ -35,7 +39,8 @@ describe('Database', () => {
   });
 
   it('find messags', async () => {
-    const res = await findHandler(dataSource);
+    const handler = new GetMessagesHandler(transport, StorageMethods.getMessages, dataSource);
+    const res = await handler.onMessage();
     expect(res)
       .to.be.an('object')
       .with.property('messages')
@@ -44,11 +49,13 @@ describe('Database', () => {
   });
 
   it('find message with id=1', async () => {
-    const res = await findHandler(dataSource, { id: 1 });
+    const messageId = 2;
+    const handler = new GetMessageByIdHandler(transport, StorageMethods.getMessages, dataSource);
+    const res = await handler.onMessage({ id: messageId });
     expect(res)
       .to.be.an('object')
-      .with.property('messages')
-      .that.be.an('array')
-      .with.length(1);
+      .with.property('message')
+      .that.be.an('object')
+      .with.property('id', messageId);
   });
 });

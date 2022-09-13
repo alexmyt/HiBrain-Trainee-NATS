@@ -6,6 +6,12 @@ import * as Uuid from 'uuid';
 export default class Transport {
   private connection: Nats.NatsConnection;
 
+  private dataCodec: Nats.Codec<unknown>;
+
+  constructor() {
+    this.dataCodec = Nats.JSONCodec();
+  }
+
   public get info() { return this.connection.info; }
 
   public async connect() {
@@ -20,15 +26,14 @@ export default class Transport {
 
   public async publish(subject: string, data: unknown) {
     const replyId = Uuid.v4();
-    const dataCodec = Nats.JSONCodec();
 
     const subscription = this.subscribe(replyId, { max: 1 });
-    this.connection.publish(subject, dataCodec.encode(data), { reply: replyId });
+    this.connection.publish(subject, this.dataCodec.encode(data), { reply: replyId });
 
     let decodedData: any;
     console.log(`listening for ${subscription.getSubject()} requests...`);
     for await (const m of subscription) {
-      decodedData = dataCodec.decode(m.data);
+      decodedData = this.dataCodec.decode(m.data);
       console.log(`Respond to ${subscription.getSubject()}: ${decodedData}`);
     }
     console.log(`subscription ${subscription.getSubject()} drained.`);
