@@ -30,4 +30,17 @@ describe('API and service', () => {
       .that.be.an('array')
       .with.length.gte(3);
   });
+
+  it('GET /api/test/{id}', async () => {
+    const res = await server.inject({
+      url: '/api/test/1',
+      method: 'GET',
+    });
+
+    expect(res.result)
+      .to.be.an('object')
+      .with.property('message')
+      .that.be.an('object')
+      .with.property('id', 1);
+  });
 });
