@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Server, ServerOptions } from '@hapi/hapi';
-import testRoute from './routes/test';
+import testRoute from './routes/testRoute';
 
 const serverOptions: ServerOptions = {
   port: process.env.API_PORT || 3000,
