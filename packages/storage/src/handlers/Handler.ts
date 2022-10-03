@@ -1,5 +1,5 @@
 import { Subscription, JSONCodec, Codec } from 'nats';
-import Transport from '../../common/Transport';
+import Transport from '@hibrain-trainee-nats/common/src/Transport';
 
 export default abstract class Handler {
   private subject: string;
@@ -28,5 +28,5 @@ export default abstract class Handler {
   }
 
   // eslint-disable-next-line no-unused-vars
-  abstract onMessage(message?: unknown): unknown
+  abstract onMessage(message?: unknown): unknown;
 }

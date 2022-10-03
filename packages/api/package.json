@@ -1,0 +1,23 @@
+{
+  "name": "@hibrain-trainee-nats/api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/hapi": "^18.0.7",
+    "@types/hapi__hapi": "^20.0.12",
+    "@types/joi": "^17.2.3"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2",
+    "@hibrain-trainee-nats/common": "*",
+    "dotenv": "^16.0.2",
+    "joi": "^17.6.0"
+  }
+}

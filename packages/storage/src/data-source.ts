@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PWD || 'test',
   database: process.env.DB_NAME || 'test',
   synchronize: true,
-  logging: ['error'],
+  // logging: ['error'],
   entities: [Message],
   subscribers: [],
   migrations: [],

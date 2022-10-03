@@ -22,7 +22,7 @@
     "experimentalDecorators": true
   },
   "include": [
-    "./src",
+    "./packages/*/src",
     "./test"
   ],
   "exclude": [

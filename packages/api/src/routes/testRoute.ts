@@ -2,8 +2,8 @@ import {
   Server, Request, ResponseToolkit,
 } from '@hapi/hapi';
 import Joi from 'joi';
-import Transport from '../../common/Transport';
-import { StorageMethods } from '../../common/constants';
+import Transport from '@hibrain-trainee-nats/common/src/Transport';
+import { StorageMethods } from '@hibrain-trainee-nats/common/src/constants';
 
 async function findMessage(request: Request, h: ResponseToolkit) {
   const transport = new Transport();
@@ -42,7 +42,7 @@ const testRoute = {
           handler: getMessageById,
           validate: {
             params: schemaGet,
-            failAction: (request, h, err) => { throw err; },
+            failAction: (request, h, err) => { throw err as Error; },
           },
         },
       },

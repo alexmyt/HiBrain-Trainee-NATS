@@ -2,12 +2,12 @@
 import 'dotenv/config';
 import { expect } from 'chai';
 import { DataSource } from 'typeorm';
-import { startService, stopService } from '../src/storage/service';
-import Transport from '../src/common/Transport';
-import AppDataSource from '../src/storage/data-source';
-import { StorageMethods } from '../src/common/constants';
-import GetMessagesHandler from '../src/storage/handlers/GetMessagesHandler';
-import GetMessageByIdHandler from '../src/storage/handlers/GetMessageByIdHandler';
+import { startService, stopService } from '../packages/storage/src/service';
+import Transport from '../packages/common/src/Transport';
+import AppDataSource from '../packages/storage/src/data-source';
+import { StorageMethods } from '../packages/common/src/constants';
+import GetMessagesHandler from '../packages/storage/src/handlers/GetMessagesHandler';
+import GetMessageByIdHandler from '../packages/storage/src/handlers/GetMessageByIdHandler';
 
 describe('Storage service', () => {
   let transport: Transport;

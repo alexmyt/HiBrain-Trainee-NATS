@@ -2,7 +2,7 @@
 import 'dotenv/config';
 import Hapi from '@hapi/hapi';
 import { expect } from 'chai';
-import * as Server from '../src/api/server';
+import * as Server from '../packages/api/src/server';
 
 describe('API', () => {
   let server: Hapi.Server;

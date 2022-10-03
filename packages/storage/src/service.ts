@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { DataSource } from 'typeorm';
-import Transport from '../common/Transport';
-import { StorageMethods } from '../common/constants';
+import Transport from '@hibrain-trainee-nats/common/src/Transport';
+import { StorageMethods } from '@hibrain-trainee-nats/common/src/constants';
 import AppDataSource from './data-source';
 import GetMessagesHandler from './handlers/GetMessagesHandler';
 import GetMessageByIdHandler from './handlers/GetMessageByIdHandler';
