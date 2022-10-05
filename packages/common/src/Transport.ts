@@ -18,6 +18,7 @@ export default class Transport {
     this.connection = await Nats.connect({
       servers: process.env.NATS_SERVER || 'nats://localhost:4222',
     });
+    console.log(`Connected to NATS host ${this.connection.info?.host}:${this.connection.info?.port}`);
   }
 
   public async disconnect() {

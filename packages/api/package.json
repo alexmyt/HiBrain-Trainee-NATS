@@ -11,8 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/hapi": "^18.0.7",
-    "@types/hapi__hapi": "^20.0.12",
-    "@types/joi": "^17.2.3"
+    "@types/hapi__hapi": "^20.0.12"
   },
   "dependencies": {
     "@hapi/hapi": "^20.2.2",
