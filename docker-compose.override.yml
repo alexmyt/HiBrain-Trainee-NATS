@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  api:
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      NATS_SERVER: nats://nats:4222
+    ports: 
+      - '3000:3000'
+    networks:
+      - frontend-tier
+  
+  storage:
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      DB_HOST: postgres
+      NATS_SERVER: nats://nats:4222
+    networks:
+      - backend-tier
+      - frontend-tier
+  
+  postgres:
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "test"
+      POSTGRES_PASSWORD: "test"
+    volumes:
+      - ./docker/postgres:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-tier
+  
+  nats:
+    ports:
+      - '4222:4222'
+      - '8222:8222'
+      - '9222:9222'
+    networks:
+      - backend-tier
+      - frontend-tier
+
+networks:
+  backend-tier:
+  frontend-tier:
