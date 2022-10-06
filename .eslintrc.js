@@ -6,21 +6,28 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
     'airbnb-base',
-    'airbnb-typescript/base',
-  ],
-  overrides: [
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: './tsconfig.json',
-  },
   plugins: [
     '@typescript-eslint',
   ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'airbnb-typescript/base',
+      ],
+      parserOptions: {
+        project: './tsconfig.json',
+      },
+    },
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
     'import/extensions': 'off',
