@@ -1,19 +1,18 @@
 /* eslint-disable no-undef */
 import 'dotenv/config';
 import Hapi from '@hapi/hapi';
-import { expect } from 'chai';
 import * as Server from '../packages/api/src/server';
 import * as Service from '../packages/storage/src/service';
 
 describe('API and service', () => {
   let server: Hapi.Server;
 
-  before(async () => {
+  beforeAll(async () => {
     server = await Server.init();
     await Service.startService();
   });
 
-  after(async () => {
+  afterAll(async () => {
     await server.stop();
     await Service.stopService();
   });
@@ -24,11 +23,12 @@ describe('API and service', () => {
       method: 'GET',
     });
 
-    expect(res.result)
-      .to.be.an('object')
-      .with.property('messages')
-      .that.be.an('array')
-      .with.length.gte(3);
+    expect(res.result).toBeDefined();
+    expect(res.result).toHaveProperty('messages');
+
+    // expect(res.result).toEqual(expect.any(Array));
+    // expect(res.result).toHaveLength(5);
+    // expect(res.result).toBeGreaterThanOrEqual(3);
   });
 
   it('GET /api/test/{id}', async () => {
@@ -37,10 +37,8 @@ describe('API and service', () => {
       method: 'GET',
     });
 
-    expect(res.result)
-      .to.be.an('object')
-      .with.property('message')
-      .that.be.an('object')
-      .with.property('id', 1);
+    expect(res.result).toEqual(expect.any(Object));
+    expect(res.result).toHaveProperty('message');
+    // expect(res.result.message).toEqual(expect.any(Object)) .toHaveProperty('id', 1);
   });
 });

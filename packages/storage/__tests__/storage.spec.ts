@@ -1,27 +1,26 @@
 /* eslint-disable no-undef */
 import 'dotenv/config';
-import { expect } from 'chai';
 import { DataSource } from 'typeorm';
-import { startService, stopService } from '../packages/storage/src/service';
-import Transport from '../packages/common/src/Transport';
-import AppDataSource from '../packages/storage/src/data-source';
-import { StorageMethods } from '../packages/common/src/constants';
-import GetMessagesHandler from '../packages/storage/src/handlers/GetMessagesHandler';
-import GetMessageByIdHandler from '../packages/storage/src/handlers/GetMessageByIdHandler';
+import Transport from '@hibrain-trainee-nats/common/src/Transport';
+import { StorageMethods } from '@hibrain-trainee-nats/common/src/constants';
+import { startService, stopService } from '../src/service';
+import AppDataSource from '../src/data-source';
+import GetMessagesHandler from '../src/handlers/GetMessagesHandler';
+import GetMessageByIdHandler from '../src/handlers/GetMessageByIdHandler';
 
 describe('Storage service', () => {
   let transport: Transport;
 
-  before(async () => {
+  beforeAll(async () => {
     transport = await startService();
   });
 
-  after(async () => {
+  afterAll(async () => {
     await stopService();
   });
 
   it('started', () => {
-    expect(transport.info).to.be.an('object');
+    expect(transport.info).toBeInstanceOf(Object);
   });
 });
 
@@ -29,33 +28,29 @@ describe('Database', () => {
   let dataSource: DataSource;
   let transport: Transport;
 
-  before(async () => {
+  beforeAll(async () => {
     transport = new Transport();
     dataSource = await AppDataSource.initialize();
   });
 
-  after(async () => {
+  afterAll(async () => {
     await dataSource.destroy();
   });
 
   it('find messags', async () => {
     const handler = new GetMessagesHandler(transport, StorageMethods.getMessages, dataSource);
     const res = await handler.onMessage();
-    expect(res)
-      .to.be.an('object')
-      .with.property('messages')
-      .that.be.an('array')
-      .with.length.gte(3);
+    expect(res.messages).toHaveLength(5);
   });
 
   it('find message with id=1', async () => {
     const messageId = 2;
     const handler = new GetMessageByIdHandler(transport, StorageMethods.getMessages, dataSource);
     const res = await handler.onMessage({ id: messageId });
-    expect(res)
-      .to.be.an('object')
-      .with.property('message')
-      .that.be.an('object')
-      .with.property('id', messageId);
+
+    expect(res).toEqual(expect.any(Object));
+    expect(res).toHaveProperty('message');
+    // .to.be.an('object').toHaveProperty('message')
+    // .that.be.an('object').toHaveProperty('id', messageId);
   });
 });
